@@ -31,10 +31,18 @@ namespace Sync
             request.AddQueryParameter("Skip", skip);
             request.AddQueryParameter("Take", take);
 
-            List<Conditions> conditions = new List<Conditions>();
-            conditions.Add(new Conditions { Parameter = "Address", Operator = "Like", Value = "AZ", SecondaryValue = "", Values = new List<string>() });
+            List<Condition> conditions = new List<Condition>();
+            conditions.Add(new Condition { Parameter = "State", Value = "AZ", SecondaryValue = "", Values = new List<string>() });
+
+            Group group = new Group() {
+                Conditions = conditions
+            };
+
+            List<Group> groups = new List<Group>();
+            groups.Add(group);
+
             var body = new ContactQueryRequest();
-            //body.Groups = conditions;
+            body.Groups = groups;
 
             request.AddJsonBody(body);
 
