@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using Sync.DataFolder;
 using System;
 using System.Globalization;
 using System.IO;
@@ -23,8 +24,7 @@ namespace Sync
             var take = 100;
             var maxContacts = 1000;
 
-            using (var writer = new StreamWriter($"Contacts_{DateTime.Now:MM_dd_yyyy}.csv"))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            using (var context = new AppDbContext())
             {
                 do
                 {
@@ -34,7 +34,8 @@ namespace Sync
                     {
                         break;
                     }
-                    csv.WriteRecords(contacts.List);
+                    context.Contacts.AddRange(contacts.List);
+                    context.SaveChanges();
                 }
                 while (!(skip > maxContacts));
             }

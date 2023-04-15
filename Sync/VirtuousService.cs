@@ -34,7 +34,7 @@ namespace Sync
             List<Conditions> conditions = new List<Conditions>();
             conditions.Add(new Conditions { Parameter = "Address", Operator = "Like", Value = "AZ", SecondaryValue = "", Values = new List<string>() });
             var body = new ContactQueryRequest();
-            body.Groups = conditions;
+            //body.Groups = conditions;
 
             request.AddJsonBody(body);
 
