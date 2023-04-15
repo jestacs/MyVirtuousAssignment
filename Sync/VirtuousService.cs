@@ -1,4 +1,5 @@
 ﻿using RestSharp;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Sync
@@ -32,8 +33,14 @@ namespace Sync
             var body = new ContactQueryRequest();
             request.AddJsonBody(body);
 
-            var response = await _restClient.GetAsync<PagedResult<AbbreviatedContact>>(request);
-            return response;
+            var response = await _restClient.ExecutePostAsync<PagedResult<AbbreviatedContact>>(request);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            var contacts = JsonSerializer.Deserialize<PagedResult<AbbreviatedContact>>(response.Content, options);
+            return contacts;
         }
     }
 }
