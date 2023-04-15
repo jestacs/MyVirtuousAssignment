@@ -39,13 +39,17 @@ namespace Sync
             request.AddJsonBody(body);
 
             var response = await _restClient.ExecutePostAsync<PagedResult<AbbreviatedContact>>(request);
-            var options = new JsonSerializerOptions
+            if (response.IsSuccessStatusCode)
             {
-                PropertyNameCaseInsensitive = true
-            };
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
 
-            var contacts = JsonSerializer.Deserialize<PagedResult<AbbreviatedContact>>(response.Content, options);
-            return contacts;
+                var contacts = JsonSerializer.Deserialize<PagedResult<AbbreviatedContact>>(response.Content, options);
+                return contacts;
+            }
+            return null;
         }
     }
 }
