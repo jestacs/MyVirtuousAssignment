@@ -10,15 +10,24 @@ namespace Sync
     {
         public ContactQueryRequest()
         {
-            Groups = new List<object>();
+            Groups = new List<Conditions>();
             SortBy = "Id";
             Descending = false;
         }
 
-        public List<object> Groups { get; set; }
+        public List<Conditions> Groups { get; set; }
 
         public string SortBy { get; set; }
 
         public bool Descending { get; set; }
+    }
+
+    public class Conditions
+    {
+        public string Parameter { get; set; }
+        public string Operator { get; set; }
+        public string Value { get; set; }
+        public string SecondaryValue { get; set; }
+        public List<string> Values { get; set; }
     }
 }
